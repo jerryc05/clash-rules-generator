@@ -404,8 +404,6 @@ rules:
         // https://www.netify.ai/resources/applications/netflix-cdn
         'nflxvideo.net',
       ]),
-    },
-    '🎬Netflix,no-resolve': {
       // https://asnlookup.com/asn/AS2906/
       'IP-CIDR': new Set([
         '23.246.0.0/18',
@@ -559,7 +557,7 @@ rules:
         '2a03:5640:f800::/37',
       ]),
     },
-    '💬OpenAI(ChatGPT)': {
+    '💬OpenAI-(ChatGPT)': {
       'DOMAIN-SUFFIX': new Set(['openai.com']),
     },
     '🎵Spotify': {
@@ -704,7 +702,11 @@ rules:
   Object.entries(domains).forEach(([name, pattern_and_infos]) => {
     Object.entries(pattern_and_infos).forEach(([pattern, infos]) => {
       infos.forEach(info => {
-        config.rules.push(`${pattern},${info},${name}`)
+        config.rules.push(
+          `${pattern},${info},${name}${
+            pattern.startsWith('IP-CIDR') ? ',no-resolve' : ''
+          }`
+        )
       })
     })
   })
