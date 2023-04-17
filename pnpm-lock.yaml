@@ -4,6 +4,9 @@ devDependencies:
   '@trivago/prettier-plugin-sort-imports':
     specifier: ^4.1.1
     version: 4.1.1(prettier@2.8.7)
+  '@types/node':
+    specifier: ^18.15.11
+    version: 18.15.11
   typescript:
     specifier: ^5.0.4
     version: 5.0.4
@@ -145,6 +148,10 @@ packages:
       prettier: 2.8.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@types/node@18.15.11:
+    resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
     dev: true
 
   /ansi-styles@3.2.1:
