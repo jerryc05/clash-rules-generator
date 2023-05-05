@@ -244,6 +244,12 @@ cfw-bypass:
   const domains: {
     [key: string]: { [key: string]: Set<string> }
   } = {
+    '🇨🇳CN-Domains': {
+      'DOMAIN-SUFFIX': new Set([
+        'cn.bing.com',
+        'google.cn',
+      ]),
+    },
     '🎬Youtube': {
       'DOMAIN-SUFFIX': new Set([
         // https://www.netify.ai/resources/applications/youtube
