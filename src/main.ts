@@ -301,10 +301,12 @@ function getDefaultProxyGroup() {
       .trim()
   )
 
+
   addUrlProxyProvider(
-    'github/aiboboxx/clashfree',
-    'https://github.com/aiboboxx/clashfree/raw/main/clash.yml'
+    'github/mahdibland/V2RayAggregator',
+    'https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/Eternity.yml'
   )
+
 }
 
 function validateRulesAndProviders() {
