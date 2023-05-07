@@ -945,6 +945,12 @@ rules:
           'ipv6check-http.steamserver.net',
         ]),
       },
+      '🎮Steam-CDN': {
+        'DOMAIN-SUFFIX': new Set([
+          'cdn.steamcontent.com',
+          'steamcdn-a.akamaihd.net',
+        ]),
+      },
       '🎮Steam-(NOT_BLOCKED)': {
         'DOMAIN-SUFFIX': new Set([
           // https://www.netify.ai/resources/applications/steam
@@ -960,12 +966,6 @@ rules:
           'steamstatic.com.8686c.com',
           'steamusercontent.com',
           'steamstat.us',
-        ]),
-      },
-      '🎮Steam-CDN': {
-        'DOMAIN-SUFFIX': new Set([
-          'cdn.steamcontent.com',
-          'steamcdn-a.akamaihd.net',
         ]),
       },
     }
@@ -1005,6 +1005,20 @@ rules:
       config.rules.push(`PROCESS-NAME,${x},${group_name}`)
     })
     ;['blizzard.com', 'battle.net'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // LinkedIn
+  {
+    const group_name = '🧑‍💼LinkedIn'
+    ;['linkedin.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
