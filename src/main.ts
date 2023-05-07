@@ -6,9 +6,27 @@ import * as YAML from 'yaml'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const ENABLE_DNS = true
+const DISABLE_FALLBACK_DNS = true
+
+//
+//
+//
+//
+//
+
 type MixinClashConfig = {
   'cfw-bypass': string[]
-  dns: object
+  dns: {
+    enable?: boolean
+    ipv6: boolean
+    listen: string
+    'default-nameserver': string[]
+    nameserver: string[]
+    fallback?: string[]
+    'fallback-filter'?: object
+    'fake-ip-filter': string[]
+  }
   tun: object
   'rule-providers': {
     [key: string]: {
@@ -19,54 +37,6 @@ type MixinClashConfig = {
       interval: 86400 // 10 days
     }
   }
-}
-
-type ClashConfig = {
-  proxies?: {
-    name: string
-    type: 'ss' | 'ssr' | 'vmess' | 'trojan' | 'socks5'
-    server: string
-    port: number
-    cipher: 'auto' | 'chacha20-ietf-poly1305'
-    password: string
-    udp: boolean
-  }[]
-  'proxy-groups':
-    | ((
-        | { type: 'select' | 'url-test' | 'fallback' }
-        | {
-            type: 'load-balance'
-            strategy?: 'consistent-hashing' | 'round-robin'
-          }
-      ) &
-        ({ proxies: string[] } | { use: string[] }) & {
-          name: string
-          url: 'http://www.google.com/generate_204'
-          interval: 600
-          lazy: true
-        })[]
-  'proxy-providers'?: {
-    [key: string]: (
-      | {
-          type: 'http'
-          url: string
-        }
-      | {
-          type: 'file'
-        }
-    ) & {
-      path: string
-      interval: number
-      filter?: string // remove the proxy that does not match the filter, separated by |
-      'health-check': {
-        enable: true
-        url: 'http://www.google.com/generate_204'
-        interval: 600
-      }
-    }
-  }
-
-  rules: string[]
 }
 
 const mixinConfig: Readonly<MixinClashConfig> = {
@@ -246,12 +216,80 @@ rule-providers:
     interval: 86400`
   )['rule-providers'],
 }
+// ENABLE_DNS
+if (ENABLE_DNS) mixinConfig.dns.enable = true
+// DISABLE_FALLBACK_DNS
+if (DISABLE_FALLBACK_DNS) {
+  delete mixinConfig.dns['fallback-filter']
+  mixinConfig.dns.nameserver.push(...(mixinConfig.dns.fallback || []))
+  delete mixinConfig.dns.fallback
+}
 fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
+
+//
+//
+//
+//
+//
+
+type ClashConfig = {
+  proxies?: {
+    name: string
+    type: 'ss' | 'ssr' | 'vmess' | 'trojan' | 'socks5'
+    server: string
+    port: number
+    cipher: 'auto' | 'chacha20-ietf-poly1305'
+    password: string
+    udp: boolean
+  }[]
+  'proxy-groups':
+    | ((
+        | { type: 'select' | 'url-test' | 'fallback' }
+        | {
+            type: 'load-balance'
+            strategy?: 'consistent-hashing' | 'round-robin'
+          }
+      ) &
+        ({ proxies: string[] } | { use: string[] }) & {
+          name: string
+          url: 'http://www.google.com/generate_204'
+          interval: 600
+          lazy: true
+        })[]
+  'proxy-providers'?: {
+    [key: string]: (
+      | {
+          type: 'http'
+          url: string
+        }
+      | {
+          type: 'file'
+        }
+    ) & {
+      path: string
+      interval: number
+      filter?: string // remove the proxy that does not match the filter, separated by |
+      'health-check': {
+        enable: true
+        url: 'http://www.google.com/generate_204'
+        interval: 600
+      }
+    }
+  }
+
+  rules: string[]
+}
 
 const config: ClashConfig = {
   rules: [],
   'proxy-groups': [],
 }
+
+//
+//
+//
+//
+//
 
 // ♻️ 自动选择
 
