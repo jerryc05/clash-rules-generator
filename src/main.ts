@@ -104,23 +104,23 @@ const mixinConfig: Readonly<MixinClashConfig> = {
       '114.114.114.114',
     ],
     nameserver: [
-      'https://doh.pub/dns-query',
+      // 'https://doh.pub/dns-query',
       'tls://dot.pub',
-      'https://dns.alidns.com/dns-query',
+      // 'https://dns.alidns.com/dns-query',
       'tls://dns.alidns.com',
-      'https://1.12.12.12/dns-query',
+      // 'https://1.12.12.12/dns-query',
       'tls://1.12.12.12',
-      'https://doh.360.cn/dns-query',
+      // 'https://doh.360.cn/dns-query',
       'tls://doh.360.cn',
       // 'dhcp://en0',
     ],
     fallback: [
       // 将被用于解析国外域名
-      'https://cloudflare-dns.com/dns-query',
+      // 'https://cloudflare-dns.com/dns-query',
       'tls://one.one.one.one',
-      'https://dns.google/dns-query',
+      // 'https://dns.google/dns-query',
       'tls://dns.google',
-      'https://dns.quad9.net/dns-query',
+      // 'https://dns.quad9.net/dns-query',
       'tls://dns.quad9.net',
     ],
     'fallback-filter': {
@@ -1000,7 +1000,6 @@ rules:
   // Overwatch
   {
     const group_name = '🎮Overwatch2_(Battle.net)'
-
     ;['Overwatch.exe', 'Battle.net.exe'].forEach(x => {
       config.rules.push(`PROCESS-NAME,${x},${group_name}`)
     })
