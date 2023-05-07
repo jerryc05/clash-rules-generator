@@ -1006,7 +1006,7 @@ rules:
   // misc
   {
     const group_name = '🔧Misc-(BLOCKED)'
-    ;[].forEach(x => {
+    ;['gravatar.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
