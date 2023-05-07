@@ -283,7 +283,7 @@ function getDefaultProxyGroup() {
   return newGroup
 }
 
-// proxcreateProxyGroup(name, type)
+// proxy-providers
 {
   function addUrlProxyProvider(name: string, url: string) {
     if (config['proxy-providers'] == null) config['proxy-providers'] = {}
@@ -1005,19 +1005,27 @@ rules:
 
   // Overwatch
   {
-    const group_name = '🎮Overwatch2_(Battle.net)'
-    ;['Overwatch.exe', 'Battle.net.exe'].forEach(x => {
+    const group_name = '🎮Overwatch'
+    ;['Overwatch.exe'].forEach(x => {
       config.rules.push(`PROCESS-NAME,${x},${group_name}`)
     })
-    ;['blizzard.com', 'battle.net'].forEach(x => {
+    config['proxy-groups'].push({
+      ...createProxyGroupPlaceholder(group_name),
+      type: 'select',
+      proxies: ['DIRECT'],
+    })
+  }
+  // Blizzard CDN
+  {
+    const group_name = '🎮Blizzard_(Battle.net)-CDN'
+    ;['cdn.blizzard.com', 'level3.blizzard.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
-    // config['proxy-groups'].push({
-    //   name: group_name,
-    //   type: 'select',
-    //   proxies: [],
-    //   use: [],
-    // })
+    config['proxy-groups'].push({
+      ...createProxyGroupPlaceholder(group_name),
+      type: 'select',
+      proxies: ['DIRECT'],
+    })
   }
 
   // LinkedIn
@@ -1037,7 +1045,7 @@ rules:
   // misc
   {
     const group_name = '🔧Misc-(BLOCKED)'
-    ;['gravatar.com', 'fanqiangdang.com'].forEach(x => {
+    ;['gravatar.com', 'fanqiangdang.com', 'digwebinterface.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
