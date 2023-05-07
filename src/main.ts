@@ -428,20 +428,33 @@ rules:
     validateRulesAndProviders()
   }
 
-  // Discord
+  // Discord BLOCKED
   {
-    const group_name = '🎮Discord'
-    ;['Discord', 'Discord.exe'].forEach(x => {
-      config.rules.push(`PROCESS-NAME,${x},${group_name}`)
-    })
+    const group_name = '🎮Discord_(BLOCKED)'
+    // ;['Discord', 'Discord.exe'].forEach(x => {
+    //   config.rules.push(`PROCESS-NAME,${x},${group_name}`)
+    // })
     ;[
       'discord.com',
-      'discord.gg',
-      'discord.media',
+      'gateway.discord.gg',
       'discordapp.com',
       'discordapp.net',
       'discordstatus.com',
     ].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Discord NOT_BLOCKED
+  {
+    const group_name = '🎮Discord_(NOT_BLOCKED)'
+    ;['discord.gg', 'discord.media'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
