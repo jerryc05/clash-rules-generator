@@ -127,7 +127,7 @@ const mixinConfig: Readonly<MixinClashConfig> = {
       geoip: true,
       'geoip-code': 'CN',
       ipcidr: [
-        //#被屏蔽的域名解析常常会被污染到这一段
+        // 被屏蔽的域名解析常常会被污染到这一段
         '240.0.0.0/4',
       ],
     },
