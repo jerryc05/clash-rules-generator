@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename)
 
 const ENABLE_DNS_HIJACK = true
 const UNSAFE_NO_FALLBACK_DNS__FAST = true
+const ENABLE_EXPERIMENTAL_BYPASS_DOMAINS = true
 
 //
 //
@@ -223,6 +224,10 @@ if (UNSAFE_NO_FALLBACK_DNS__FAST) {
   delete mixinConfig.dns['fallback-filter']
   mixinConfig.dns.nameserver.push(...(mixinConfig.dns.fallback || []))
   delete mixinConfig.dns.fallback
+}
+// ENABLE_EXPERIMENTAL_BYPASS_DOMAINS
+if (ENABLE_EXPERIMENTAL_BYPASS_DOMAINS) {
+  mixinConfig['cfw-bypass'].push('local.teams.office.com')
 }
 fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
 
