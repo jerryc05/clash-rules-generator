@@ -1,11 +1,12 @@
 {
 	"devDependencies": {
 		"@trivago/prettier-plugin-sort-imports": "^4.1.1",
-		"@types/node": "^18.15.11",
+		"@types/node": "^18.16.4",
 		"typescript": "^5.0.4",
-		"yaml": "^2.2.1"
+		"yaml": "^2.2.2"
 	},
 	"scripts": {
-		"start": "tsc src/main.ts && node src/main.js"
-	}
+		"start": "tsc && node --enable-source-maps src/main.js"
+	},
+	"type": "module"
 }

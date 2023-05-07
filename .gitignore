@@ -1,4 +1,6 @@
 node_modules/
-src/*.js
+src/*.js*
 
-/dont-sync
+dont-sync/
+
+/*.yaml
