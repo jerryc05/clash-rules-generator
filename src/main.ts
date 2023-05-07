@@ -17,7 +17,7 @@ const ENABLE_EXPERIMENTAL_BYPASS_DOMAINS = true
 //
 
 type MixinClashConfig = {
-  'bypass': string[]  /// todo: not in mixin
+  bypass: string[] /// todo: not in mixin
   dns: {
     enable?: boolean
     ipv6: boolean
@@ -41,7 +41,7 @@ type MixinClashConfig = {
 }
 
 const mixinConfig: Readonly<MixinClashConfig> = {
-  'bypass': [
+  bypass: [
     'localhost',
     '127.*',
     '10.*',
@@ -1102,7 +1102,12 @@ rules:
   // misc
   {
     const group_name = '🔧Misc-(BLOCKED)'
-    ;['gravatar.com', 'fanqiangdang.com', 'digwebinterface.com'].forEach(x => {
+    ;[
+      'gravatar.com',
+      'fanqiangdang.com',
+      'digwebinterface.com',
+      'v2ex.com',
+    ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
