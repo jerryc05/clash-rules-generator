@@ -63,7 +63,7 @@ type ClashConfig = {
   rules: string[]
 }
 
-const mixinConfig: MixinClashConfig = {
+const mixinConfig: Readonly<MixinClashConfig> = {
   'cfw-bypass': [
     'localhost',
     '127.*',
@@ -235,6 +235,8 @@ rule-providers:
     interval: 86400`
   )['rule-providers'],
 }
+fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
+
 const config: ClashConfig = {
   rules: [],
   'proxy-groups': [],
@@ -420,6 +422,20 @@ rules:
   {
     const group_name = '💬Tencent'
     ;['qq.com', 'qpic.cn'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Zhihu
+  {
+    const group_name = '💬Tencent'
+    ;['zhihu.com', 'zhing.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -950,8 +966,26 @@ rules:
 
   // Microsoft
   {
-    const group_name = 'Microsoft'
+    const group_name = 'Ⓜ️Microsoft'
     ;['trafficmanager.net'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Overwatch
+  {
+    const group_name = '🎮Overwatch2 (Battlenet)'
+
+    ;['Overwatch.exe', 'Battle.net.exe'].forEach(x => {
+      config.rules.push(`PROCESS-NAME,${x},${group_name}`)
+    })
+    ;['blizzard.com', 'battle.net'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -980,8 +1014,7 @@ rules:
 }
 // console.log(JSON.stringify(config, null, 2))
 
-fs.writeFile('my-config.yaml', YAML.stringify(config), () => {})
-fs.writeFile('mixin.yaml', YAML.stringify(mixinConfig), () => {})
+await fs.promises.writeFile('my-config.yaml', YAML.stringify(config))
 
 validateRulesAndProviders()
 validateRulesAndProxyGroups()
