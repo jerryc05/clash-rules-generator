@@ -999,7 +999,7 @@ rules:
 
   // Overwatch
   {
-    const group_name = '🎮Overwatch2 (Battlenet)'
+    const group_name = '🎮Overwatch2_(Battle.net)'
 
     ;['Overwatch.exe', 'Battle.net.exe'].forEach(x => {
       config.rules.push(`PROCESS-NAME,${x},${group_name}`)
