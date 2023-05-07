@@ -251,21 +251,33 @@ const config: ClashConfig = {
 
 const DEFAULT_PROXY_NAME = '🚀️默认梯子线路🪜'
 
+function createProxyGroupPlaceholder(name: string) {
+  const x: Pick<
+    ClashConfig['proxy-groups'][0],
+    'name' | 'url' | 'interval' | 'lazy'
+  > = {
+    name,
+    url: 'http://www.google.com/generate_204',
+    interval: 600,
+    lazy: true,
+  }
+  return x
+}
+
 function getDefaultProxyGroup() {
   const group = config['proxy-groups'].find(x => x.name === DEFAULT_PROXY_NAME)
   if (group) return group
 
   const newGroup: ClashConfig['proxy-groups'][0] = {
-    name: DEFAULT_PROXY_NAME,
+    ...createProxyGroupPlaceholder(DEFAULT_PROXY_NAME),
     type: 'select',
     proxies: [],
-    interval: 600,
-    lazy: true,
   }
   config['proxy-groups'].push(newGroup)
+  return newGroup
 }
 
-// proxy-providers
+// proxcreateProxyGroup(name, type)
 {
   function addUrlProxyProvider(name: string, url: string) {
     if (config['proxy-providers'] == null) config['proxy-providers'] = {}
