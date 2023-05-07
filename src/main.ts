@@ -111,7 +111,7 @@ const mixinConfig: Readonly<MixinClashConfig> = {
     ],
     fallback: [
       // 将被用于解析国外域名
-      'https://1.1.1.1/dns-query',
+      'https://cloudflare-dns.com/dns-query',
       'tls://one.one.one.one',
       'https://dns.google/dns-query',
       'tls://dns.google',
