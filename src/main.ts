@@ -33,12 +33,16 @@ type ClashConfig = {
   'proxy-groups':
     | ((
         | { type: 'select' | 'fallback' }
-        | { type: 'url-test' | 'load-balance'; url: string; interval: number }
-      ) & {
-        name: string
-        proxies: string[]
-        use: string[]
-      })[]
+        | {
+            type: 'url-test' | 'load-balance'
+            url: string
+          }
+      ) &
+        ({ proxies: string[] } | { use: string[] }) & {
+          name: string
+          interval: 600
+          lazy: true
+        })[]
   'proxy-providers'?: {
     [key: string]: (
       | {
@@ -254,7 +258,8 @@ function getDefaultProxyGroup() {
     name: DEFAULT_PROXY_NAME,
     type: 'select',
     proxies: [],
-    use: [],
+    interval: 600,
+    lazy: true,
   }
   config['proxy-groups'].push(newGroup)
 }
