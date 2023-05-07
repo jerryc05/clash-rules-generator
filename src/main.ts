@@ -430,7 +430,7 @@ rules:
 
   // Discord BLOCKED
   {
-    const group_name = '🎮Discord_(BLOCKED)'
+    const group_name = '🎮Discord_已被墙域名'
     // ;['Discord', 'Discord.exe'].forEach(x => {
     //   config.rules.push(`PROCESS-NAME,${x},${group_name}`)
     // })
@@ -453,7 +453,7 @@ rules:
 
   // Discord NOT_BLOCKED
   {
-    const group_name = '🎮Discord_(NOT_BLOCKED)'
+    const group_name = '🎮Discord_可直连域名'
     ;['discord.gg', 'discord.media'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
