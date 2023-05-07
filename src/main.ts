@@ -924,6 +924,7 @@ rules:
           'steamcommunity.com',
           'api.steampowered.com',
           'store.steampowered.com',
+          'ipv6check-http.steamserver.net',
         ]),
       },
       '🎮Steam-(NOT_BLOCKED)': {
