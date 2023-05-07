@@ -88,7 +88,7 @@ const mixinConfig: Readonly<MixinClashConfig> = {
     '<local>',
   ],
   dns: {
-    enable: true,
+    enable: false,
     ipv6: true,
     listen: '127.0.0.1:53',
     'default-nameserver': [
