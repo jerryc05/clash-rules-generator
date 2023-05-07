@@ -6,8 +6,8 @@ import * as YAML from 'yaml'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const ENABLE_DNS = true
-const DISABLE_FALLBACK_DNS = true
+const ENABLE_DNS_HIJACK = true
+const UNSAFE_NO_FALLBACK_DNS__FAST = true
 
 //
 //
@@ -217,9 +217,9 @@ rule-providers:
   )['rule-providers'],
 }
 // ENABLE_DNS
-if (ENABLE_DNS) mixinConfig.dns.enable = true
+if (ENABLE_DNS_HIJACK) mixinConfig.dns.enable = true
 // DISABLE_FALLBACK_DNS
-if (DISABLE_FALLBACK_DNS) {
+if (UNSAFE_NO_FALLBACK_DNS__FAST) {
   delete mixinConfig.dns['fallback-filter']
   mixinConfig.dns.nameserver.push(...(mixinConfig.dns.fallback || []))
   delete mixinConfig.dns.fallback
