@@ -436,7 +436,7 @@ rules:
     // })
     ;[
       'discord.com',
-      'gateway.discord.gg',
+      'gateway.discord.gg' /* must before [discord.gg] */,
       'discordapp.com',
       'discordapp.net',
       'discordstatus.com',
