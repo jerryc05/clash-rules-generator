@@ -32,14 +32,15 @@ type ClashConfig = {
   }[]
   'proxy-groups':
     | ((
-        | { type: 'select' | 'fallback' }
+        | { type: 'select' | 'url-test' | 'fallback' }
         | {
-            type: 'url-test' | 'load-balance'
-            url: string
+            type: 'load-balance'
+            strategy?: 'consistent-hashing' | 'round-robin'
           }
       ) &
         ({ proxies: string[] } | { use: string[] }) & {
           name: string
+          url: 'http://www.google.com/generate_204'
           interval: 600
           lazy: true
         })[]
