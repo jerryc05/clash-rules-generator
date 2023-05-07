@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename)
 type MixinClashConfig = {
   'cfw-bypass': string[]
   dns: object
+  tun: object
   'rule-providers': {
     [key: string]: {
       type: 'http'
@@ -145,6 +146,9 @@ const mixinConfig: Readonly<MixinClashConfig> = {
       '*.msftconnecttest.com',
       'WORKGROUP',
     ],
+  },
+  tun: {
+    stack: 'system',
   },
   'rule-providers': YAML.parse(
     // https://github.com/Loyalsoldier/clash-rules
