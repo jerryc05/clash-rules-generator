@@ -17,7 +17,7 @@ const ENABLE_EXPERIMENTAL_BYPASS_DOMAINS = true
 //
 
 type MixinClashConfig = {
-  'cfw-bypass': string[]
+  'bypass': string[]  /// todo: not in mixin
   dns: {
     enable?: boolean
     ipv6: boolean
@@ -41,7 +41,7 @@ type MixinClashConfig = {
 }
 
 const mixinConfig: Readonly<MixinClashConfig> = {
-  'cfw-bypass': [
+  'bypass': [
     'localhost',
     '127.*',
     '10.*',
@@ -227,7 +227,8 @@ if (UNSAFE_NO_FALLBACK_DNS__FAST) {
 }
 // ENABLE_EXPERIMENTAL_BYPASS_DOMAINS
 if (ENABLE_EXPERIMENTAL_BYPASS_DOMAINS) {
-  mixinConfig['cfw-bypass'].push('local.teams.office.com')
+  mixinConfig['bypass'].unshift('local.teams.office.com')
+  mixinConfig['bypass'].unshift('*blizzard.com')
 }
 fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
 
@@ -258,7 +259,7 @@ type ClashConfig = {
         ({ proxies: string[] } | { use: string[] }) & {
           name: string
           url: 'http://www.google.com/generate_204'
-          interval: 600
+          interval: 300
           lazy: true
         })[]
   'proxy-providers'?: {
@@ -307,7 +308,7 @@ function createProxyGroupPlaceholder(name: string) {
   > = {
     name,
     url: 'http://www.google.com/generate_204',
-    interval: 600,
+    interval: 300,
     lazy: true,
   }
   return x
