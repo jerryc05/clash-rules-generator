@@ -126,7 +126,10 @@ const mixinConfig: Readonly<MixinClashConfig> = {
     'fallback-filter': {
       geoip: true,
       'geoip-code': 'CN',
-      ipcidr: ['240.0.0.0/4  #被屏蔽的域名解析常常会被污染到这一段'],
+      ipcidr: [
+        //#被屏蔽的域名解析常常会被污染到这一段
+        '240.0.0.0/4',
+      ],
     },
     'fake-ip-filter': [
       '*.lan',
