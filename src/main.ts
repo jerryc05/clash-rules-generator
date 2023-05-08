@@ -1076,7 +1076,7 @@ rules:
   // Blizzard CDN
   {
     const group_name = '🎮Blizzard_(Battle.net)-CDN'
-    ;['cdn.blizzard.com', 'level3.blizzard.com'].forEach(x => {
+    ;['cdn.blizzard.com', 'level3.blizzard.com','blz-contentstack-images.akamaized.net','bnetcmsus-a.akamaihd.net'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     config['proxy-groups'].push({
