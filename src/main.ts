@@ -516,8 +516,39 @@ rules:
 
   // Zhihu
   {
-    const group_name = '💬Tencent'
+    const group_name = '💬知乎'
     ;['zhihu.com', 'zhing.com'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Google NOT_BLOCKED
+  {
+    const group_name = '🚀Google_可直连'
+    ;['dl.google.com'/* must before [google.com] */,].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Google BLOCKED
+  {
+    const group_name = '🚀Google_已被墙'
+    ;[
+      'google.com',
+      'googleapi.com',
+      'googleusercontent.com',].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
