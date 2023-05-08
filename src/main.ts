@@ -1073,6 +1073,20 @@ rules:
       proxies: ['DIRECT'],
     })
   }
+  
+  // Battle.net speed up
+  {
+    const group_name = '🎮Battle.net_加速'
+    ;['us.battle.net'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   ...createProxyGroupPlaceholder(group_name),
+    //   type: 'select',
+    //   proxies: ['DIRECT'],
+    // })
+  }
+  
   // Blizzard CDN
   {
     const group_name = '🎮Blizzard_(Battle.net)-CDN'
