@@ -234,6 +234,11 @@ if (ENABLE_EXPERIMENTAL_BYPASS_DOMAINS) {
     ...mixinConfig.dns['fake-ip-filter']
   )
 }
+
+if (mixinConfig.bypass[mixinConfig.bypass.length-1] != '<local>') 
+throw new Error(
+  '<local> must be the last item in [bypass]!'
+)
 fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
 
 //
