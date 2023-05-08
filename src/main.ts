@@ -440,10 +440,7 @@ rules:
 
   // Discord BLOCKED
   {
-    const group_name = '🎮Discord_已被墙域名'
-    // ;['Discord', 'Discord.exe'].forEach(x => {
-    //   config.rules.push(`PROCESS-NAME,${x},${group_name}`)
-    // })
+    const group_name = '🎮Discord_已被墙域名' 
     ;[
       'discord.com',
       'gateway.discord.gg' /* must before [discord.gg] */,
