@@ -1102,7 +1102,7 @@ rules:
 
   // Github BLOCKED
   {
-    const group_name = '🐙GitHub_走梯子'
+    const group_name = '🐙GitHub_已被墙'
     ;['github.blog'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
