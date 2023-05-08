@@ -1106,6 +1106,9 @@ rules:
     ;['github.blog'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
+    ;['github.com'].forEach(x => {
+      config.rules.push(`DOMAIN,${x},${group_name}`)
+    })
     // config['proxy-groups'].push({
     //   name: group_name,
     //   type: 'select',
