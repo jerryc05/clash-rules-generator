@@ -1131,6 +1131,20 @@ rules:
     // })
   }
 
+  // Github speed up
+  {
+    const group_name = '🐙GitHub_加速'
+    ;['github.com'].forEach(x => {
+      config.rules.push(`DOMAIN,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
   // Github NOT_BLOCKED
   {
     const group_name = '🐙GitHub_可能可直连'
