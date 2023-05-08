@@ -231,6 +231,7 @@ if (ENABLE_EXPERIMENTAL_BYPASS_DOMAINS) {
     'local.teams.office.com',
     '*blizzard.com'/* battle.net download cdn */,
     'xz.pphimalayanrt.com'/* steam download cdn */,
+    ...mixinConfig.dns['fake-ip-filter']
   )
 }
 fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
