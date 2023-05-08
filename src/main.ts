@@ -1099,9 +1099,23 @@ rules:
     // })
   }
 
-  // Github
+  // Github BLOCKED
   {
-    const group_name = '🐙GitHub'
+    const group_name = '🐙GitHub_走梯子'
+    ;['github.blog'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Github NOT_BLOCKED
+  {
+    const group_name = '🐙GitHub_可能可直连'
     ;['github.com','github.dev','githubassets.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
