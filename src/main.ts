@@ -227,8 +227,11 @@ if (UNSAFE_NO_FALLBACK_DNS__FAST) {
 }
 // ENABLE_EXPERIMENTAL_BYPASS_DOMAINS
 if (ENABLE_EXPERIMENTAL_BYPASS_DOMAINS) {
-  mixinConfig['bypass'].unshift('local.teams.office.com')
-  mixinConfig['bypass'].unshift('*blizzard.com')
+  mixinConfig['bypass'].unshift(
+    'local.teams.office.com',
+    '*blizzard.com'/* battle.net download cdn */,
+    'xz.pphimalayanrt.com'/* steam download cdn */,
+  )
 }
 fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
 
