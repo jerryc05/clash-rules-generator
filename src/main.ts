@@ -547,7 +547,7 @@ rules:
     const group_name = '🚀Google_已被墙'
     ;[
       'google.com',
-      'googleapi.com',
+      'googleapis.com',
       'googleusercontent.com',].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
