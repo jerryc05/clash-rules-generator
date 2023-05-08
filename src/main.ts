@@ -1101,7 +1101,7 @@ rules:
 
   // Github
   {
-    const group_name = '👨‍💻GitHub'
+    const group_name = '🐙GitHub'
     ;['github.com','github.dev','githubassets.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
