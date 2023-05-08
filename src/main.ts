@@ -548,7 +548,8 @@ rules:
     ;[
       'google.com',
       'googleapis.com',
-      'googleusercontent.com',].forEach(x => {
+      'googleusercontent.com',
+    'webpkgcache.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
