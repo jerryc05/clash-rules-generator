@@ -1135,7 +1135,7 @@ rules:
   // LinkedIn
   {
     const group_name = '🧑‍💼LinkedIn'
-    ;['linkedin.com'].forEach(x => {
+    ;['linkedin.com','gist.github.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1149,11 +1149,8 @@ rules:
   // Github BLOCKED
   {
     const group_name = '🐙GitHub_已被墙'
-    ;['github.blog'].forEach(x => {
+    ;['github.blog','gist.github.com',].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
-    })
-    ;['github.com'].forEach(x => {
-      config.rules.push(`DOMAIN,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
     //   name: group_name,
@@ -1180,7 +1177,7 @@ rules:
   // Github NOT_BLOCKED
   {
     const group_name = '🐙GitHub_可能可直连'
-    ;['github.com','github.dev','githubassets.com'].forEach(x => {
+    ;['github.dev','githubassets.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
