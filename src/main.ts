@@ -1085,10 +1085,13 @@ rules:
 
   // Microsoft
   {
-    const group_name = 'Ⓜ️Microsoft'
-    ;['trafficmanager.net'].forEach(x => {
-      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
-    })
+    const group_name = 'Ⓜ️Microsoft_可直连'
+
+    ;['trafficmanager.net', 'officecdn-microsoft-com.akamaized.net'].forEach(
+      x => {
+        config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+      }
+    )
     // config['proxy-groups'].push({
     //   name: group_name,
     //   type: 'select',
@@ -1131,6 +1134,8 @@ rules:
       'level3.blizzard.com',
       'blz-contentstack-images.akamaized.net',
       'bnetcmsus-a.akamaihd.net',
+      //
+      'blzddist1-a.akamaihd.net',
     ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
@@ -1139,6 +1144,20 @@ rules:
       type: 'select',
       proxies: ['DIRECT'],
     })
+  }
+
+  // Vercel
+  {
+    const group_name = '🚀vercel.app'
+    ;['vercel.app'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
   }
 
   // LinkedIn
