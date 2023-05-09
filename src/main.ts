@@ -8,7 +8,13 @@ const __dirname = path.dirname(__filename)
 
 const ENABLE_DNS_HIJACK = true
 const UNSAFE_NO_FALLBACK_DNS__FAST = true
-const ENABLE_EXPERIMENTAL_BYPASS_DOMAINS = true
+const BYPASS_FAKE_IP_FILTER = true
+const BYPASS_DOMAINS = [
+  'local.teams.office.com',
+  '*blizzard.com' /* battle.net download cdn */,
+  'xz.pphimalayanrt.com' /* steam download cdn */,
+  'clash.razord.top' /* clash premium localhost */,
+]
 
 //
 //
@@ -219,21 +225,18 @@ rule-providers:
 }
 // ENABLE_DNS
 if (ENABLE_DNS_HIJACK) mixinConfig.dns.enable = true
-// DISABLE_FALLBACK_DNS
+// UNSAFE_NO_FALLBACK_DNS__FAST
 if (UNSAFE_NO_FALLBACK_DNS__FAST) {
   delete mixinConfig.dns['fallback-filter']
   mixinConfig.dns.nameserver.push(...(mixinConfig.dns.fallback || []))
   delete mixinConfig.dns.fallback
 }
-// ENABLE_EXPERIMENTAL_BYPASS_DOMAINS
-if (ENABLE_EXPERIMENTAL_BYPASS_DOMAINS) {
-  mixinConfig['bypass'].unshift(
-    'local.teams.office.com',
-    '*blizzard.com' /* battle.net download cdn */,
-    'xz.pphimalayanrt.com' /* steam download cdn */,
-    ...mixinConfig.dns['fake-ip-filter']
-  )
-}
+mixinConfig['bypass'].unshift(
+  ...BYPASS_DOMAINS,
+  .../* BYPASS_FAKE_IP_FILTER */ (BYPASS_FAKE_IP_FILTER
+    ? mixinConfig.dns['fake-ip-filter']
+    : [])
+)
 
 if (mixinConfig.bypass[mixinConfig.bypass.length - 1] != '<local>')
   throw new Error('<local> must be the last item in [bypass]!')
@@ -1221,15 +1224,29 @@ rules:
     // })
   }
 
-  // misc
+  // misc blocked
   {
-    const group_name = '🔧Misc-(BLOCKED)'
+    const group_name = '🔧Misc_已被墙'
     ;[
       'gravatar.com',
       'fanqiangdang.com',
       'digwebinterface.com',
       'v2ex.com',
     ].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // misc blocked
+  {
+    const group_name = '🔧Misc_可直连'
+    ;[...BYPASS_DOMAINS].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
