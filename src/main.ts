@@ -1087,11 +1087,13 @@ rules:
   {
     const group_name = 'Ⓜ️Microsoft_可直连'
 
-    ;['trafficmanager.net', 'officecdn-microsoft-com.akamaized.net'].forEach(
-      x => {
-        config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
-      }
-    )
+    ;[
+      'trafficmanager.net',
+      'officecdn-microsoft-com.akamaized.net',
+      'visualstudio.com',
+    ].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
     // config['proxy-groups'].push({
     //   name: group_name,
     //   type: 'select',
@@ -1207,7 +1209,7 @@ rules:
 
   // Github NOT_BLOCKED
   {
-    const group_name = '🐙GitHub_可能可直连'
+    const group_name = '🐙GitHub_可直连'
     ;['github.dev', 'githubassets.com', 'github.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
