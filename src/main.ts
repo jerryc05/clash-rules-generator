@@ -229,6 +229,7 @@ if (ENABLE_DNS_HIJACK) mixinConfig.dns.enable = true
 if (UNSAFE_NO_FALLBACK_DNS__FAST) {
   delete mixinConfig.dns['fallback-filter']
   mixinConfig.dns.nameserver.push(...(mixinConfig.dns.fallback || []))
+  mixinConfig.dns.nameserver.push('dhcp://en0')
   delete mixinConfig.dns.fallback
 }
 mixinConfig['bypass'].unshift(
