@@ -229,16 +229,14 @@ if (UNSAFE_NO_FALLBACK_DNS__FAST) {
 if (ENABLE_EXPERIMENTAL_BYPASS_DOMAINS) {
   mixinConfig['bypass'].unshift(
     'local.teams.office.com',
-    '*blizzard.com'/* battle.net download cdn */,
-    'xz.pphimalayanrt.com'/* steam download cdn */,
+    '*blizzard.com' /* battle.net download cdn */,
+    'xz.pphimalayanrt.com' /* steam download cdn */,
     ...mixinConfig.dns['fake-ip-filter']
   )
 }
 
-if (mixinConfig.bypass[mixinConfig.bypass.length-1] != '<local>') 
-throw new Error(
-  '<local> must be the last item in [bypass]!'
-)
+if (mixinConfig.bypass[mixinConfig.bypass.length - 1] != '<local>')
+  throw new Error('<local> must be the last item in [bypass]!')
 fs.promises.writeFile('mixin.yaml', YAML.stringify({ mixin: mixinConfig }))
 
 //
@@ -445,7 +443,7 @@ rules:
 
   // Discord BLOCKED
   {
-    const group_name = '🎮Discord_已被墙域名' 
+    const group_name = '🎮Discord_已被墙域名'
     ;[
       'discord.com',
       'gateway.discord.gg' /* must before [discord.gg] */,
@@ -536,7 +534,7 @@ rules:
   // Google NOT_BLOCKED
   {
     const group_name = '🚀Google_可直连'
-    ;['dl.google.com'/* must before [google.com] */,].forEach(x => {
+    ;['dl.google.com' /* must before [google.com] */].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -554,7 +552,8 @@ rules:
       'google.com',
       'googleapis.com',
       'googleusercontent.com',
-    'webpkgcache.com'].forEach(x => {
+      'webpkgcache.com',
+    ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1110,7 +1109,7 @@ rules:
       proxies: ['DIRECT'],
     })
   }
-  
+
   // Battle.net speed up
   {
     const group_name = '🎮Battle.net_加速'
@@ -1123,11 +1122,16 @@ rules:
     //   proxies: ['DIRECT'],
     // })
   }
-  
+
   // Blizzard CDN
   {
     const group_name = '🎮Blizzard_(Battle.net)-CDN'
-    ;['cdn.blizzard.com', 'level3.blizzard.com','blz-contentstack-images.akamaized.net','bnetcmsus-a.akamaihd.net'].forEach(x => {
+    ;[
+      'cdn.blizzard.com',
+      'level3.blizzard.com',
+      'blz-contentstack-images.akamaized.net',
+      'bnetcmsus-a.akamaihd.net',
+    ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     config['proxy-groups'].push({
@@ -1140,7 +1144,7 @@ rules:
   // LinkedIn
   {
     const group_name = '🧑‍💼LinkedIn'
-    ;['linkedin.com','gist.github.com'].forEach(x => {
+    ;['linkedin.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1154,7 +1158,7 @@ rules:
   // Github BLOCKED
   {
     const group_name = '🐙GitHub_已被墙'
-    ;['github.blog','gist.github.com',].forEach(x => {
+    ;['github.blog', 'gist.github.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1168,7 +1172,10 @@ rules:
   // Github speed up
   {
     const group_name = '🐙GitHub_加速'
-    ;['github.com'].forEach(x => {
+    ;['github.githubassets.com'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    ;['github.com' /* must before [DOMAIN-SUFFIX,github.com] */].forEach(x => {
       config.rules.push(`DOMAIN,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1182,7 +1189,7 @@ rules:
   // Github NOT_BLOCKED
   {
     const group_name = '🐙GitHub_可能可直连'
-    ;['github.dev','githubassets.com'].forEach(x => {
+    ;['github.dev', 'githubassets.com', 'github.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
