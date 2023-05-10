@@ -14,6 +14,7 @@ const BYPASS_DOMAINS = [
   '*blizzard.com' /* battle.net download cdn */,
   'xz.pphimalayanrt.com' /* steam download cdn */,
   'clash.razord.top' /* clash premium localhost */,
+  'blank' /* used by wechat, no idea */,
 ]
 
 //
@@ -1051,8 +1052,34 @@ rules:
       },
       '🎮Steam-CDN': {
         'DOMAIN-SUFFIX': new Set([
-          'cdn.steamcontent.com',
+          'steamcontent.com',
           'steamcdn-a.akamaihd.net',
+          'steampipe-kr.akamaized.net',
+          'steampipe-partner.akamaized.net',
+          'steampipe.akamaized.net',
+          'edge.steam-dns.top.comcast.net',
+          'steam.eca.qtlglb.com',
+          'steam.naeu.qtlglb.com',
+          'steam.ru.qtlglb.com',
+          'steam.apac.qtlglb.com',
+          'f3b7q2p3.ssl.hwcdn.net',
+          'steam.cdn.on.net',
+          'steam.cdn.orcon.net.nz',
+          'steam.cdn.slingshot.co.nz',
+          'steam.cdn.webra.ru',
+
+          'dl.steam.clngaa.com',
+          'steampipe.steamcontent.tnkjmec.com',
+          'st.dl.eccdnx.com',
+          'st.dl.bscstorage.net',
+          'st.dl.pinyuncloud.com',
+          'steampowered.com.8686c.com',
+          'cdn-ws.content.steamchina.com',
+          'cdn-qc.content.steamchina.com',
+          'cdn-ali.content.steamchina.com',
+          'xz.pphimalayanrt.com',
+          'lv.queniujq.cn',
+          'alibaba.cdn.steampipe.steamcontent.com',
         ]),
       },
       '🎮Steam-(NOT_BLOCKED)': {
@@ -1061,10 +1088,8 @@ rules:
           's.team',
           'steam-chat.com',
           'steamchina.com',
-          'steamcontent.com',
           'steamgames.com',
           'steampowered.com',
-          'steampowered.com.8686c.com',
           'steamserver.net',
           'steamstatic.com',
           'steamstatic.com.8686c.com',
@@ -1095,7 +1120,25 @@ rules:
       'trafficmanager.net',
       'officecdn-microsoft-com.akamaized.net',
       'visualstudio.com',
+      'cn.bing.com',
+      'msedge.net',
+      'vscodeexperiments.azureedge.net',
     ].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Adobe CDN
+  {
+    const group_name = 'Adobe_CDN_可直连'
+
+    ;['ccmdls.adobe.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1233,6 +1276,7 @@ rules:
       'fanqiangdang.com',
       'digwebinterface.com',
       'v2ex.com',
+      'intel.com',
     ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
@@ -1247,7 +1291,7 @@ rules:
   // misc blocked
   {
     const group_name = '🔧Misc_可直连'
-    ;[...BYPASS_DOMAINS].forEach(x => {
+    ;[...BYPASS_DOMAINS, 'dsadata.intel.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1266,3 +1310,6 @@ await fs.promises.writeFile('my-config.yaml', YAML.stringify(config))
 
 validateRulesAndProviders()
 validateRulesAndProxyGroups()
+
+// todo add domain-suffix direct to bypass
+// todo validate check for duplicate domain
