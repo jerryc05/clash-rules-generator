@@ -15,6 +15,7 @@ const BYPASS_DOMAINS = [
   'xz.pphimalayanrt.com' /* steam download cdn */,
   'clash.razord.top' /* clash premium localhost */,
   'blank' /* used by wechat, no idea */,
+  'dsadata.intel.com',
 ]
 
 //
@@ -1293,7 +1294,7 @@ rules:
       'fanqiangdang.com',
       'digwebinterface.com',
       'v2ex.com',
-      'intel.com',
+      'stackpath.bootstrapcdn.com',
     ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
@@ -1308,7 +1309,7 @@ rules:
   // misc blocked
   {
     const group_name = '🔧Misc_可直连'
-    ;[...BYPASS_DOMAINS, 'dsadata.intel.com'].forEach(x => {
+    ;[...BYPASS_DOMAINS].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
