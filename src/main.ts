@@ -1122,7 +1122,10 @@ rules:
       'visualstudio.com',
       'cn.bing.com',
       'msedge.net',
-      'vscodeexperiments.azureedge.net',
+      'azureedge.net',
+      'msedge.net',
+      'azurefd.net',
+      'vsassets.io',
     ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
@@ -1258,6 +1261,20 @@ rules:
   {
     const group_name = '🐙GitHub_可直连'
     ;['github.dev', 'githubassets.com', 'github.com'].forEach(x => {
+      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    })
+    // config['proxy-groups'].push({
+    //   name: group_name,
+    //   type: 'select',
+    //   proxies: [],
+    //   use: [],
+    // })
+  }
+
+  // Github CDN
+  {
+    const group_name = '🐙GitHub_CDN_可直连'
+    ;['objects.githubusercontent.com'].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
