@@ -9,14 +9,14 @@ const __dirname = path.dirname(__filename)
 const ENABLE_DNS_HIJACK = true
 const UNSAFE_NO_FALLBACK_DNS__FAST = true
 const BYPASS_FAKE_IP_FILTER = true
-const BYPASS_DOMAINS = [
-  'local.teams.office.com',
-  '*blizzard.com' /* battle.net download cdn */,
-  'xz.pphimalayanrt.com' /* steam download cdn */,
-  'clash.razord.top' /* clash premium localhost */,
-  'blank' /* used by wechat, no idea */,
-  'dsadata.intel.com',
-]
+
+//
+//
+//
+//
+//
+
+const bypass_domains: string[] = []
 
 //
 //
@@ -25,7 +25,6 @@ const BYPASS_DOMAINS = [
 //
 
 type MixinClashConfig = {
-  bypass: string[] /// todo: not in mixin
   dns: {
     enable?: boolean
     ipv6: boolean
@@ -49,29 +48,6 @@ type MixinClashConfig = {
 }
 
 const mixinConfig: Readonly<MixinClashConfig> = {
-  bypass: [
-    'localhost',
-    '127.*',
-    '10.*',
-    '172.16.*',
-    '172.17.*',
-    '172.18.*',
-    '172.19.*',
-    '172.20.*',
-    '172.21.*',
-    '172.22.*',
-    '172.23.*',
-    '172.24.*',
-    '172.25.*',
-    '172.26.*',
-    '172.27.*',
-    '172.28.*',
-    '172.29.*',
-    '172.30.*',
-    '172.31.*',
-    '192.168.*',
-    '<local>',
-  ],
   dns: {
     ipv6: true,
     listen: '127.0.0.1:53',
@@ -235,7 +211,7 @@ if (UNSAFE_NO_FALLBACK_DNS__FAST) {
   delete mixinConfig.dns.fallback
 }
 mixinConfig['bypass'].unshift(
-  ...BYPASS_DOMAINS,
+  ...BYPASS_DOMAINS_SUFFIX,
   .../* BYPASS_FAKE_IP_FILTER */ (BYPASS_FAKE_IP_FILTER
     ? mixinConfig.dns['fake-ip-filter']
     : [])
@@ -302,6 +278,19 @@ type ClashConfig = {
 const config: ClashConfig = {
   rules: [],
   'proxy-groups': [],
+}
+
+function addRuleToBypassHelper(
+  mode: string,
+  pattern: string,
+  groupName: string
+) {
+  if (!mode || !pattern || !groupName)
+    throw new Error(`Rule ${arguments} cannot be empty!`)
+  if (Array.from(arguments).some(x => (x as string).includes(',')))
+    throw new Error(`Args ${arguments} cannot contain comma!`)
+  config.rules.push(`${mode},${pattern},${groupName}`)
+  bypass_domains.push(pattern)
 }
 
 //
@@ -1258,24 +1247,13 @@ rules:
     // })
   }
 
-  // Github NOT_BLOCKED
-  {
-    const group_name = '🐙GitHub_可直连'
-    ;['github.dev', 'githubassets.com', 'github.com'].forEach(x => {
-      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
-    })
-    // config['proxy-groups'].push({
-    //   name: group_name,
-    //   type: 'select',
-    //   proxies: [],
-    //   use: [],
-    // })
-  }
-
   // Github CDN
   {
     const group_name = '🐙GitHub_CDN_可直连'
-    ;['objects.githubusercontent.com'].forEach(x => {
+    ;[
+      'codeload.github.com' /* asset download */,
+      'objects.githubusercontent.com' /* must before [githubusercontent.com] */,
+    ].forEach(x => {
       config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
     })
     // config['proxy-groups'].push({
@@ -1284,6 +1262,25 @@ rules:
     //   proxies: [],
     //   use: [],
     // })
+
+    // Github NOT_BLOCKED
+    {
+      const group_name = '🐙GitHub_可直连'
+      ;[
+        'github.dev',
+        'githubassets.com',
+        'github.com',
+        'githubusercontent.com',
+      ].forEach(x => {
+        config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+      })
+      // config['proxy-groups'].push({
+      //   name: group_name,
+      //   type: 'select',
+      //   proxies: [],
+      //   use: [],
+      // })
+    }
   }
 
   // misc blocked
@@ -1306,11 +1303,18 @@ rules:
     // })
   }
 
-  // misc blocked
+  // misc NOT_BLOCKED
   {
     const group_name = '🔧Misc_可直连'
-    ;[...BYPASS_DOMAINS].forEach(x => {
-      config.rules.push(`DOMAIN-SUFFIX,${x},${group_name}`)
+    ;[
+      'local.teams.office.com',
+      '*blizzard.com' /* battle.net download cdn */,
+      'xz.pphimalayanrt.com' /* steam download cdn */,
+      'clash.razord.top' /* clash premium localhost */,
+      'blank' /* used by wechat, no idea */,
+      'dsadata.intel.com',
+    ].forEach(x => {
+      addRuleToBypassHelper('DOMAIN-SUFFIX', x, group_name)
     })
     // config['proxy-groups'].push({
     //   name: group_name,
@@ -1323,6 +1327,49 @@ rules:
   config.rules.push('MATCH,🐟漏网之鱼')
 }
 // console.log(JSON.stringify(config, null, 2))
+
+//
+//
+//
+//
+//
+
+// bypass
+fs.promises.writeFile(
+  'bypass.yaml',
+  YAML.stringify({
+    bypass: [
+      ...bypass_domains,
+      'localhost',
+      '127.*',
+      '10.*',
+      '172.16.*',
+      '172.17.*',
+      '172.18.*',
+      '172.19.*',
+      '172.20.*',
+      '172.21.*',
+      '172.22.*',
+      '172.23.*',
+      '172.24.*',
+      '172.25.*',
+      '172.26.*',
+      '172.27.*',
+      '172.28.*',
+      '172.29.*',
+      '172.30.*',
+      '172.31.*',
+      '192.168.*',
+      '<local>',
+    ],
+  })
+)
+
+//
+//
+//
+//
+//
 
 await fs.promises.writeFile('my-config.yaml', YAML.stringify(config))
 
