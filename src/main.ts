@@ -1038,6 +1038,7 @@ rules:
           'api.steampowered.com',
           'store.steampowered.com',
           'ipv6check-http.steamserver.net',
+          'steam-chat.com',
         ]),
       },
       '🎮Steam-CDN': {
@@ -1076,7 +1077,6 @@ rules:
         'DOMAIN-SUFFIX': new Set([
           // https://www.netify.ai/resources/applications/steam
           's.team',
-          'steam-chat.com',
           'steamchina.com',
           'steamgames.com',
           'steampowered.com',
